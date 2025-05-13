@@ -1,0 +1,24 @@
+.max-width-400 {
+    max-width: 400px;
+}
+.login-image {
+    background-image: url('/assets/images/bg-login.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+.sign-image {
+    background-image: url('/assets/images/bg-sign-up.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+.recover-image {
+    background-image: url('/assets/images/bg-recover-password.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}

@@ -1,0 +1,65 @@
+# Diretórios de IDEs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Composer
+/vendor/
+/composer.lock
+
+# Logs e cache
+*.log
+*.cache
+*.tmp
+*.swp
+*.bak
+*.orig
+*.gz
+*.zip
+
+# Cache e sessão PHP
+/sessions/
+/cache/
+
+# Uploads (se for temporário)
+uploads/
+
+# Arquivos de ambiente e configs locais
+.env
+.env.*.local
+.env.local
+
+# Testes e cobertura
+/phpunit.xml
+/phpunit.result.cache
+/coverage/
+
+# Build e artefatos
+/node_modules/
+/dist/
+/build/
+
+# Banco de dados local
+*.sqlite
+*.sqlite3
+*.db
+
+# IDE JetBrains (PhpStorm, WebStorm)
+*.iml
+
+# Frontend (caso tenha)
+public/mix-manifest.json
+public/hot
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Outros
+*.lock

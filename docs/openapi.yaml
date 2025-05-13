@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Projeto FluentPDO API
+  version: 1.0.0
+  description: API REST para autenticação e gerenciamento de usuários
+
+servers:
+  - url: https://projetofluentpdo.test
+    description: Ambiente de desenvolvimento local
+
+paths:
+  /api/auth/login:
+    post:
+      summary: Login do usuário
+      description: Autenticação via e-mail e senha. Retorna token JWT.
+      tags: [Autenticação]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: elcioguimaraes@gmail.com
+                password:
+                  type: string
+                  example: homologa
+      responses:
+        '200':
+          description: Login realizado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: Wn6nr6yQ
+                  token:
+                    type: string
+                    example: eyJ0eXAiOiJKV1QiLCJh...
+        '400':
+          description: Erro de validação ou credenciais inválidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Credenciais inválidas.
+                  data:
+                    nullable: true
+        '422':
+          description: Campos obrigatórios ausentes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: E-mail e senha são obrigatórios.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
