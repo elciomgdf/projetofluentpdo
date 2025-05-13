@@ -1,6 +1,6 @@
 # Projeto FluentPDO - Gerenciador de Tarefas
 
-Este é um dos sistemas exigidos no teste de desenvolvedor FullStack PHP. 
+Este é um sistema teste.
 Ele utiliza **PHP 8+, Jquery, MySQL, API REST** e a biblioteca **FluentPDO** para acesso ao banco de dados.
 
 ## 🔧 Tecnologias Utilizadas
