@@ -49,6 +49,11 @@ class RestrictedController
 
             $userToken = new UserTokenModel();
             $userToken->findOneBy(['token' => $token]);
+
+            if (!$userToken->getStatus()) {
+                throw new \Exception('Token inexistente', HttpStatus::UNAUTHORIZED);
+            }
+
             if ($userToken->getStatus() === UserTokenModel::INVALID) {
                 throw new \Exception('Token cancelado em ' . $userToken->getLogged_out_at(), HttpStatus::UNAUTHORIZED);
             }

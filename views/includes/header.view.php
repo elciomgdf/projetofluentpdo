@@ -46,7 +46,7 @@
         <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="/dashboard"><?= $_ENV['APP_NAME'] ?></a></li>
+                    <li class="breadcrumb-item"><a href="/dashboard">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><?= escapeString($title) ?? ''?></li>
                 </ol>
             </nav>

@@ -1,9 +1,9 @@
 
-DROP TABLE tasks;
-DROP TABLE task_categories;
-DROP TABLE user_tokens;
-DROP TABLE user_sessions;
-DROP TABLE users;
+-- DROP TABLE tasks;
+-- DROP TABLE task_categories;
+-- DROP TABLE user_tokens;
+-- DROP TABLE user_sessions;
+-- DROP TABLE users;
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   FOREIGN KEY (`category_id`) REFERENCES `task_categories`(`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `user_tokens` (
+CREATE TABLE IF NOT EXISTS `user_tokens` (
    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
    `user_id` INT UNSIGNED NOT NULL,
    `token` TEXT NOT NULL,

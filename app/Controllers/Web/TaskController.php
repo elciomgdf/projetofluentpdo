@@ -46,7 +46,10 @@ class TaskController extends Controller
 
             if ($encodedId) {
                 $id = $this->decode($encodedId);
-                $model->find($id);
+                $model->findOneBy(['id' => $id, 'user_id' => $this->session('user_id')]);
+                if (empty($model->getId())) {
+                    throw new NotFoundException("Tarefa não encontrada");
+                }
             }
 
             $data = $model->toArray();
@@ -56,7 +59,7 @@ class TaskController extends Controller
             $this->view('task/edit', array_merge($data, ['encoded_id' => $encodedId], ['categorias' => $categorias]));
 
         } catch (\Exception $e) {
-            $this->jsonExceptions($e);
+            $this->htmlError($e->getMessage(), $e->getCode());
         }
     }
 

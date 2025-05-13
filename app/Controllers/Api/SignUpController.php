@@ -3,7 +3,9 @@
 namespace App\Controllers\Api;
 
 use App\Constants\HttpStatus;
+use App\Constants\Response;
 use App\Services\UserService;
+use App\Traits\EncodeTrait;
 use App\Traits\RequestTrait;
 use App\Traits\ResponseTrait;
 use App\Validators\UserValidator;
@@ -11,9 +13,10 @@ use App\Validators\UserValidator;
 /**
  * Classe para o cadastro do Usuário
  */
-class SignUpController {
+class SignUpController
+{
 
-    use ResponseTrait, RequestTrait;
+    use ResponseTrait, RequestTrait, EncodeTrait;
 
     public function create(): void
     {
@@ -23,7 +26,25 @@ class SignUpController {
 
             $user = (new UserService())->save($data);
 
-            $this->json($user->toArray(), HttpStatus::CREATED);
+            $this->json(array_merge($user->toArray(), ['encoded_id' => $this->encode($user->getId())]), HttpStatus::CREATED);
+
+        } catch (\Exception $e) {
+            $this->jsonExceptions($e);
+        }
+
+    }
+
+
+    /**
+     * @return void
+     */
+    public function sendPassword(): void
+    {
+        try {
+
+            (new UserService())->createNewPassword($this->input('email'));
+
+            $this->json(['type' => Response::SUCCESS, 'message' => 'Caso você possua cadastro com o e-mail informado, seus dados de acesso chegarão em instantes.']);
 
         } catch (\Exception $e) {
             $this->jsonExceptions($e);

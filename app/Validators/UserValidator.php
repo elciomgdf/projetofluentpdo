@@ -45,15 +45,21 @@ class UserValidator extends Validator
             }
 
         } else {
+
             if (!empty($validated['password'])) {
+
                 if (empty($validated['password_confirm'])) {
                     $errors['password_confirm'][] = 'Informe a mesma senha para confirmação';
                 }
 
+                $validated['password_confirm'] = $validated['password_confirm'] ?? '';
+
                 if ($validated['password_confirm'] !== $validated['password']) {
                     $errors['password_confirm'][] = 'A senha e a senha de confirmação precisam ter o mesmo valor';
                 }
+
             }
+
         }
 
         if (!empty($validated['name'])) {

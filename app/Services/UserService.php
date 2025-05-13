@@ -36,7 +36,15 @@ class UserService
 
         $per_page = $data['per_page'] ?? 10;
 
-        return (new UserModel())->paginate($page, (int)$per_page, $where, $orderBy, $data['direction'] ?? 'ASC');
+        $data = (new UserModel())->paginate($page, (int)$per_page, $where, $orderBy, $data['direction'] ?? 'ASC');
+
+        if (!empty($data['items'])) {
+            foreach ($data['items'] as $key => $item) {
+                $data['items'][$key]['encoded_id'] = $this->encode($item['id']);
+            }
+        }
+
+        return $data;
 
     }
 

@@ -61,7 +61,7 @@ class TaskValidator extends Validator
             }
         }
 
-        if (!empty($validated['category_id'])) {
+        if (isset($validated['category_id'])) {
             if (empty((new TaskCategoryModel())->find($validated['category_id']))) {
                 $errors['category_id'][] = 'Categoria não encontrada';
             }

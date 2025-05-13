@@ -30,6 +30,7 @@ keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 
 [alt_names]
 DNS.1 = projetofluentpdo.test
+DNS.2 = projetomedoo.test
 EOL
 
 # Gera o certificado com SAN
@@ -40,5 +41,5 @@ openssl req -x509 -nodes -days 365 \
     -config $CONFIG_FILE \
     -extensions v3_ca
 
-echo "Certificado gerado com SAN para projetofluentpdo.test:"
+echo "Certificado gerado com SAN para projetofluentpdo.test e projetomedoo.test:"
 ls -l $CERT_DIR

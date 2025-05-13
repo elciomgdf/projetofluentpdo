@@ -56,9 +56,6 @@ trait ResponseTrait
     public function jsonExceptions(\Exception $e, array $data = null, string $type = Response::ERROR): void
     {
 
-        // ValidationException
-
-
         $return = ['type' => $type, 'message' => $e->getMessage()];
 
         if ($e instanceof ValidationException) {

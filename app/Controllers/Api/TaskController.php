@@ -3,6 +3,7 @@
 namespace App\Controllers\Api;
 
 use App\Constants\HttpStatus;
+use App\Constants\Response;
 use App\Exceptions\NotFoundException;
 use App\Models\TaskModel;
 use App\Services\TaskService;
@@ -106,6 +107,38 @@ class TaskController extends RestrictedController
             $model = (new TaskService())->save($data, $id);
 
             $this->json(array_merge($model->toArray(), ['encoded_id' => $this->encode($id)]));
+
+        } catch (\Exception $e) {
+            $this->jsonExceptions($e);
+        }
+    }
+
+    /**
+     * Exclui uma Tarefa
+     * @param $encodedId
+     * @return void
+     */
+    public function delete($encodedId): void
+    {
+        try {
+
+            $id = $this->decode($encodedId);
+
+            if (empty($id)) {
+                throw new NotFoundException("Registro não encontrado");
+            }
+
+            $model = new TaskModel();
+            $model->findOneBy(['id' => $id, 'user_id' => $this->getUser()->getId()]);
+            if (!empty($model->getId())) {
+                $deleted = $model->delete($id);
+            }
+
+            if (empty($deleted)) {
+                throw new NotFoundException("Registro não encontrado!");
+            }
+
+            $this->json(['type' => Response::SUCCESS, 'message' => 'Registro excluído com sucesso']);
 
         } catch (\Exception $e) {
             $this->jsonExceptions($e);

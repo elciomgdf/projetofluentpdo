@@ -60,6 +60,7 @@ $routes = [
 
     // Registro de usuário via API (acesso público)
     'api/sign-up' => [SignUpController::class, 'create', 'post', [RateLimitMiddleware::class]],
+    'api/recover-password' => [SignUpController::class, 'sendPassword', 'post', [RateLimitMiddleware::class]], // Recuperação de senha
 
     // Usuários - operações protegidas
     'api/user/search' => [UserController::class, 'search', 'get', [RateLimitMiddleware::class]], // Busca paginada
@@ -71,6 +72,7 @@ $routes = [
     'api/category/search' => [TaskCategoryController::class, 'search', 'get', [RateLimitMiddleware::class]],
     'api/category/{id}' => [TaskCategoryController::class, 'return', 'get', [RateLimitMiddleware::class]],
     'api/category/{id}/update' => [TaskCategoryController::class, 'update', 'put', [RateLimitMiddleware::class]],
+    'api/category/{id}/delete' => [TaskCategoryController::class, 'delete', 'delete', [RateLimitMiddleware::class]], // Exclusão de categoria
     'api/categories' => [TaskCategoryController::class, 'all', 'get', [RateLimitMiddleware::class]], // Retorna todas as categorias
 
     // Tarefas - operações CRUD básicas
@@ -78,5 +80,6 @@ $routes = [
     'api/task/search' => [TaskController::class, 'search', 'get', [RateLimitMiddleware::class]],
     'api/task/{id}' => [TaskController::class, 'return', 'get', [RateLimitMiddleware::class]],
     'api/task/{id}/update' => [TaskController::class, 'update', 'put', [RateLimitMiddleware::class]],
+    'api/task/{id}/delete' => [TaskController::class, 'delete', 'delete', [RateLimitMiddleware::class]],
 
 ];

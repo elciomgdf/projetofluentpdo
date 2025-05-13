@@ -20,7 +20,13 @@ class TaskCategoryService
      */
     public function all($limit = 1000)
     {
-        return (new TaskCategoryModel())->all((int)$limit, 'name');
+        $items = (new TaskCategoryModel())->all((int)$limit, 'name');
+        if (!empty($items)) {
+            foreach ($items as $key => $item) {
+                $items[$key]['encoded_id'] = $this->encode($item['id']);
+            }
+        }
+        return $items;
     }
 
     /**

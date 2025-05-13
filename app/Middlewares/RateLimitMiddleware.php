@@ -11,7 +11,7 @@ class RateLimitMiddleware
     {
 
         // Arquivo temporário simples como "cache"
-        $file = sys_get_temp_dir() . '/ratelimitmiddleware_' . md5($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+        $file = sys_get_temp_dir() . '/ratelimit_' . md5($_SERVER['REMOTE_ADDR'] ?? 'unknown');
 
         $requests = [];
 
