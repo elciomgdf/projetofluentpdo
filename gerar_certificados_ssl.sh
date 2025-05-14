@@ -30,7 +30,6 @@ keyUsage = critical, digitalSignature, cRLSign, keyCertSign
 
 [alt_names]
 DNS.1 = projetofluentpdo.test
-DNS.2 = projetomedoo.test
 EOL
 
 # Gera o certificado com SAN

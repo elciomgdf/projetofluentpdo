@@ -1,10 +1,9 @@
 
 # Teste de Desenvolvimento
 
-## ✅ Projetos
+## ✅ Projeto
 
 - `https://projetofluentpdo.test` → **Usando FluentPDO**
-- `https://projetomedoo.test` → **Usando Medoo**
 
 Os dois projetos foram desenvolvidos separadamente mas a única diferença é o uso da biblioteca de acesso à base de dados de cada um.
 
@@ -57,18 +56,6 @@ Os dois projetos foram desenvolvidos separadamente mas a única diferença é o 
 5. Selecione: `Autoridades de Certificação Raiz Confiáveis`.
 6. Conclua a instalação e aceite os avisos.
 7. Reabra o navegador e acesse `https://projetofluentpdo.test`.
-
-### ✏️ Observações
-
-- Para adicionar outro domínio (como `projetomedoo.test`), edite o script e adicione mais entradas em `[alt_names]`:
-
-    ```ini
-    [alt_names]
-    DNS.1 = projetofluentpdo.test
-    DNS.2 = projetomedoo.test
-    ```
-
-- Se estiver usando múltiplos domínios, o mesmo certificado pode ser compartilhado entre os dois projetos no Nginx.
 
 ---
 
