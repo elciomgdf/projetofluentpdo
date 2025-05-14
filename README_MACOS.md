@@ -36,7 +36,7 @@ cd projetofluentpdo
 
 ### 3. 🔐 Gere os certificados SSL
 
-Dê permissão e execute o script:
+Depois de clonar o repositório, no Terminal:
 
 ```bash
 chmod +x ./gerar_certificados_ssl.sh
@@ -47,7 +47,7 @@ chmod +x ./gerar_certificados_ssl.sh
 
 ### 4. 🧠 Configure o arquivo de hosts
 
-Edite o arquivo `/etc/hosts`:
+Abra o arquivo `/etc/hosts` com permissões de root:
 
 ```bash
 sudo nano /etc/hosts
@@ -61,10 +61,10 @@ Adicione ao final:
 
 ### 5. ✅ Instale o certificado no macOS
 
-1. Abra o app **Acesso às Chaves** (Keychain Access)
-2. Vá em “Sistema” → clique com o botão direito em uma área vazia → **Importar**
-3. Selecione o arquivo `cert.pem` e importe
-4. Clique duas vezes no certificado → **Confiar sempre**
+1. Abra o app **Acesso às Chaves (Keychain Access)**
+2. Vá em “Sistema” → clique com o botão direito → **Importar**
+3. Selecione o arquivo `cert.pem`
+4. Clique duas vezes no certificado importado → em “Confiar”, selecione **Confiar sempre**
 5. Feche e insira sua senha de administrador
 6. Reinicie o navegador
 
@@ -79,6 +79,7 @@ docker-compose up -d --build
 ```bash
 docker exec -it nome_do_container_php bash
 composer install
+cp .env.example .env
 php database/create_database.php
 ```
 

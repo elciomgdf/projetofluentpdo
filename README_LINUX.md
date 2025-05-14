@@ -78,6 +78,7 @@ docker-compose up -d --build
 ```bash
 docker exec -it nome_do_container_php bash
 composer install
+cp .env.example .env
 php database/create_database.php
 ```
 
