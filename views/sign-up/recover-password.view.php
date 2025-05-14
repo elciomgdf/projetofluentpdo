@@ -65,32 +65,40 @@
                     </div>
                 </div>
                 <script>
-                    $('#userForm').on('submit', function (e) {
-                        e.preventDefault();
-                        limpaErros();
-                        $('#btn-submit').prop('disabled', true).text('Cadastrando...');
-                        const formData = $(this).serialize();
-                        $.ajax({
-                            url: '/recover-password/send',
-                            method: 'POST',
-                            data: formData,
-                            dataType: "json",
-                            success: function (res) {
-                                $('#message').text(res.message)
-                                    .removeClass('alert-danger d-none')
-                                    .addClass('alert-success');
-                                $('#btn-submit').prop('disabled', false).text('Recuperar Senha');
-                            },
-                            error: function (xhr) {
-                                $('#btn-submit').prop('disabled', false).text('Recuperar Senha');
-                                const msg = xhr.responseJSON?.message || 'Erro ao recuperar a senha.';
-                                const resposta = xhr.responseJSON;
-                                if (resposta?.errors) {
-                                    exibeErros(resposta.errors);
-                                }
-                                $('#message').text(msg).removeClass('alert-success d-none')
-                                    .addClass('alert-danger');
+
+                    $(document).ready(function () {
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('input[name="csrf_token"]').val()
                             }
+                        });
+                        $('#userForm').on('submit', function (e) {
+                            e.preventDefault();
+                            limpaErros();
+                            $('#btn-submit').prop('disabled', true).text('Cadastrando...');
+                            const formData = $(this).serialize();
+                            $.ajax({
+                                url: '/recover-password/send',
+                                method: 'POST',
+                                data: formData,
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#message').text(res.message)
+                                        .removeClass('alert-danger d-none')
+                                        .addClass('alert-success');
+                                    $('#btn-submit').prop('disabled', false).text('Recuperar Senha');
+                                },
+                                error: function (xhr) {
+                                    $('#btn-submit').prop('disabled', false).text('Recuperar Senha');
+                                    const msg = xhr.responseJSON?.message || 'Erro ao recuperar a senha.';
+                                    const resposta = xhr.responseJSON;
+                                    if (resposta?.errors) {
+                                        exibeErros(resposta.errors);
+                                    }
+                                    $('#message').text(msg).removeClass('alert-success d-none')
+                                        .addClass('alert-danger');
+                                }
+                            });
                         });
                     });
                 </script>

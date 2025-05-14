@@ -39,6 +39,7 @@
                         <a href="/recover-password" id="recover">Esqueci a senha</a>
                         <a href="/sign-up" target="_self" id="register">Cadastrar</a>
                     </div>
+
                 </form>
 
                 <div id="error" class="alert alert-danger d-none w-100"></div>
@@ -58,30 +59,32 @@
     </div>
 </div>
 <script>
-    $('#loginForm').on('submit', function (e) {
-        e.preventDefault();
-        const email = $('#email').val();
-        const password = $('#password').val();
+    $(document).ready(function () {
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+            const email = $('#email').val();
+            const password = $('#password').val();
 
-        $('#error').addClass('d-none');
-        $('#btn-submit').prop('disabled', true).text('Autenticando...');
+            $('#error').addClass('d-none');
+            $('#btn-submit').prop('disabled', true).text('Autenticando...');
 
-        $.ajax({
-            url: '/auth/login',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({email, password}),
-            success: function (res) {
-                if (res.id) {
-                    return location.replace('/dashboard');
+            $.ajax({
+                url: '/auth/login',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({email, password}),
+                success: function (res) {
+                    if (res.id) {
+                        return location.replace('/dashboard');
+                    }
+                    $('#btn-submit').prop('disabled', false).text('Entrar');
+                },
+                error: function (xhr) {
+                    const error = xhr.responseJSON?.message || 'Erro ao tentar fazer login.';
+                    $('#error').text(error).removeClass('d-none');
+                    $('#btn-submit').prop('disabled', false).text('Entrar');
                 }
-                $('#btn-submit').prop('disabled', false).text('Entrar');
-            },
-            error: function (xhr) {
-                const error = xhr.responseJSON?.message || 'Erro ao tentar fazer login.';
-                $('#error').text(error).removeClass('d-none');
-                $('#btn-submit').prop('disabled', false).text('Entrar');
-            }
+            });
         });
     });
 

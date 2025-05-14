@@ -81,41 +81,52 @@
                     </div>
                 </div>
                 <script>
-                    $('#userForm').on('submit', function (e) {
-                        e.preventDefault();
-                        limpaErros();
-                        $('#btn-submit').prop('disabled', true).text('Cadastrando...');
-                        const formData = $(this).serialize();
-                        $.ajax({
-                            url: '/sign-up/create',
-                            method: 'POST',
-                            data: formData,
-                            dataType: "json",
-                            success: function (res) {
-                                $('#message').text('Usuário cadastrado com sucesso!')
-                                    .removeClass('alert-danger d-none')
-                                    .addClass('alert-success');
-                                $('#btn-submit').text('Redirecionando...');
 
-                                if (res.id) {
-                                    setTimeout(function () {
-                                        location.replace('/dashboard');
-                                    }, 1000);
-                                }
+                    $(document).ready(function () {
 
-                            },
-                            error: function (xhr) {
-                                $('#btn-submit').prop('disabled', false).text('Cadastrar');
-                                const msg = xhr.responseJSON?.message || 'Erro ao cadastrar usuário.';
-                                const resposta = xhr.responseJSON;
-                                if (resposta?.errors) {
-                                    exibeErros(resposta.errors);
-                                }
-                                $('#message').text(msg).removeClass('alert-success d-none')
-                                    .addClass('alert-danger');
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('input[name="csrf_token"]').val()
                             }
                         });
-                    });
+
+                        $('#userForm').on('submit', function (e) {
+                            e.preventDefault();
+                            limpaErros();
+                            $('#btn-submit').prop('disabled', true).text('Cadastrando...');
+                            const formData = $(this).serialize();
+                            $.ajax({
+                                url: '/sign-up/create',
+                                method: 'POST',
+                                data: formData,
+                                dataType: "json",
+                                success: function (res) {
+                                    $('#message').text('Usuário cadastrado com sucesso!')
+                                        .removeClass('alert-danger d-none')
+                                        .addClass('alert-success');
+                                    $('#btn-submit').text('Redirecionando...');
+
+                                    if (res.id) {
+                                        setTimeout(function () {
+                                            location.replace('/dashboard');
+                                        }, 1000);
+                                    }
+
+                                },
+                                error: function (xhr) {
+                                    $('#btn-submit').prop('disabled', false).text('Cadastrar');
+                                    const msg = xhr.responseJSON?.message || 'Erro ao cadastrar usuário.';
+                                    const resposta = xhr.responseJSON;
+                                    if (resposta?.errors) {
+                                        exibeErros(resposta.errors);
+                                    }
+                                    $('#message').text(msg).removeClass('alert-success d-none')
+                                        .addClass('alert-danger');
+                                }
+                            });
+                        });
+
+                    })
                 </script>
             </div>
         </div>
