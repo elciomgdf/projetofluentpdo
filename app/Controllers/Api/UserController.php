@@ -15,6 +15,10 @@ class UserController extends RestrictedController
 
     use ResponseTrait, RequestTrait, MailTrait;
 
+    /**
+     * Pesquisa
+     * @return void
+     */
     public function search(): void
     {
         try {
@@ -26,6 +30,11 @@ class UserController extends RestrictedController
         }
     }
 
+    /**
+     * Retorna os dados de um usuário
+     * @param $id
+     * @return void
+     */
     public function return($id): void
     {
         try {
@@ -50,6 +59,11 @@ class UserController extends RestrictedController
         }
     }
 
+    /**
+     * Atualiza os dados de um usuário
+     * @param $id
+     * @return void
+     */
     public function update($id): void
     {
         try {

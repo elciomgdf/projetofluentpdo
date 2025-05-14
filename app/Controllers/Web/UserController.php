@@ -23,7 +23,7 @@ class UserController extends Controller
             $this->view('profile/edit', $data);
 
         } catch (\Exception $e) {
-            $this->jsonExceptions($e);
+            $this->htmlError($e->getMessage(), $e->getCode());
         }
     }
 

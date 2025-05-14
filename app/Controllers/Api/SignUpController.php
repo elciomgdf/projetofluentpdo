@@ -18,6 +18,10 @@ class SignUpController
 
     use ResponseTrait, RequestTrait, EncodeTrait;
 
+    /**
+     * Cria um novo usuário no sistema
+     * @return void
+     */
     public function create(): void
     {
         try {
@@ -36,6 +40,7 @@ class SignUpController
 
 
     /**
+     * Gera e envia uma nova senha ao usuário
      * @return void
      */
     public function sendPassword(): void

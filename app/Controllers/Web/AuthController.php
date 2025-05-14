@@ -9,7 +9,7 @@ class AuthController extends Controller
 {
 
     /**
-     * Login
+     * Login por E-mail e Senha
      *
      * @return void
      */
@@ -36,11 +36,19 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * Faz o logout do usuário
+     * @return void
+     */
     public function logout()
     {
-        (new AuthService())->logout(true);
-        $this->renewCsrfToken();
-        header('location: /');
+        try {
+            (new AuthService())->logout(true);
+            $this->renewCsrfToken();
+            header('location: /');
+        } catch (\Exception $e) {
+            $this->htmlError($e->getMessage());
+        }
     }
 
 }

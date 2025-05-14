@@ -13,7 +13,7 @@ class AuthController
     use RequestTrait, ResponseTrait;
 
     /**
-     * Login
+     * Login por E-mail e Senha
      *
      * @return void
      */
@@ -39,16 +39,19 @@ class AuthController
     }
 
     /**
-     * Invalida o Token
+     * Faz o logout do usuário
      * @return void
-     * @throws \Envms\FluentPDO\Exception
      */
     public function logout()
     {
-        if ((new AuthService())->logout()) {
-            $this->json(['type' => Response::SUCCESS, 'message' => 'Logout efetuado com sucesso']);
+        try {
+            if ((new AuthService())->logout()) {
+                $this->json(['type' => Response::SUCCESS, 'message' => 'Logout efetuado com sucesso']);
+            }
+            $this->jsonError('Logout inválido ou desnecessário');
+        } catch (\Exception $e) {
+            $this->jsonExceptions($e);
         }
-        $this->jsonError('Logout inválido ou desnecessário');
     }
 
 }

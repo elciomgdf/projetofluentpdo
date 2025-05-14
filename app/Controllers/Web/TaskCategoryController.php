@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Web;
 
+use App\Constants\HttpStatus;
 use App\Constants\Response;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
@@ -13,6 +14,10 @@ use App\Validators\TaskCategoryValidator;
 class TaskCategoryController extends Controller
 {
 
+    /**
+     * Tela de pesquisa
+     * @return void
+     */
     public function search(): void
     {
         try {
@@ -24,10 +29,15 @@ class TaskCategoryController extends Controller
             $this->view('category/search', $data);
 
         } catch (\Exception $e) {
-            $this->jsonExceptions($e);
+            $this->htmlError($e->getMessage());
         }
     }
 
+    /**
+     * Formulário de alteração/inclusão
+     * @param $encodedId
+     * @return void
+     */
     public function edit($encodedId = null): void
     {
         try {
@@ -37,6 +47,11 @@ class TaskCategoryController extends Controller
             if ($encodedId) {
                 $id = $this->decode($encodedId);
                 $model->find($id);
+
+                if (empty($model->getId())) {
+                    throw new \Exception("Categoria não encontrada", HttpStatus::NOT_FOUND);
+                }
+
             }
 
             $data = $model->toArray();
@@ -44,10 +59,14 @@ class TaskCategoryController extends Controller
             $this->view('category/edit', array_merge($data, ['encoded_id' => $encodedId]));
 
         } catch (\Exception $e) {
-            $this->jsonExceptions($e);
+            $this->htmlError($e->getMessage(), $e->getCode());
         }
     }
 
+    /**
+     * Método para salvar os dados. Inclui ou altera.
+     * @return void
+     */
     public function save(): void
     {
         try {
@@ -67,6 +86,11 @@ class TaskCategoryController extends Controller
         }
     }
 
+    /**
+     * Exclusão de dados
+     * @param $encodedId
+     * @return void
+     */
     public function delete($encodedId): void
     {
         try {
@@ -88,7 +112,11 @@ class TaskCategoryController extends Controller
             };
 
             $model = new TaskCategoryModel();
-            $model->delete($id);
+            $deleted = $model->delete($id);
+
+            if (empty($deleted)) {
+                throw new NotFoundException("Registro não encontrado!");
+            }
 
             $this->json(['type' => Response::SUCCESS, 'message' => 'Registro excluído com sucesso']);
 

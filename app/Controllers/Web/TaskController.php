@@ -106,7 +106,14 @@ class TaskController extends Controller
             }
 
             $model = new TaskModel();
-            $model->delete($id);
+            $model->findOneBy(['id' => $id, 'user_id' => $this->session('user_id')]);
+            if (!empty($model->getId())) {
+                $deleted = $model->delete($id);
+            }
+
+            if (empty($deleted)) {
+                throw new NotFoundException("Registro não encontrado!");
+            }
 
             $this->json(['type' => Response::SUCCESS, 'message' => 'Registro excluído com sucesso']);
 

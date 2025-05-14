@@ -6,8 +6,6 @@ use App\Constants\HttpStatus;
 use App\Constants\Response;
 use App\Services\AuthService;
 use App\Services\UserService;
-use App\Traits\RequestTrait;
-use App\Traits\ResponseTrait;
 use App\Validators\UserValidator;
 
 /**
@@ -17,6 +15,8 @@ class SignUpController extends Controller
 {
 
     /**
+     *
+     * Tela para criar um novo cadastro
      * @return void
      */
     public function signUp(): void
@@ -24,6 +24,10 @@ class SignUpController extends Controller
         $this->view('sign-up/edit');
     }
 
+    /**
+     * Cria um novo cadastro
+     * @return void
+     */
     public function create(): void
     {
         try {
@@ -48,6 +52,8 @@ class SignUpController extends Controller
     }
 
     /**
+     *
+     * Tela para recuperar a senha
      * @return void
      */
     public function recoverPassword(): void
@@ -56,6 +62,8 @@ class SignUpController extends Controller
     }
 
     /**
+     *
+     * Gera e envia uma nova senha ao e-mail informado
      * @return void
      */
     public function sendPassword(): void
