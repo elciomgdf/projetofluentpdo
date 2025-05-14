@@ -1,10 +1,3 @@
-
--- DROP TABLE tasks;
--- DROP TABLE task_categories;
--- DROP TABLE user_tokens;
--- DROP TABLE user_sessions;
--- DROP TABLE users;
-
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(100) NOT NULL,
@@ -35,7 +28,11 @@ CREATE TABLE IF NOT EXISTS `task_categories` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO task_categories (name, description) VALUES ('Geral', 'Categoria Geral');
+INSERT INTO task_categories (name, description)
+SELECT 'Geral', 'Categoria Geral'
+    WHERE NOT EXISTS (
+    SELECT 1 FROM task_categories WHERE id = 1
+);
 
 CREATE TABLE IF NOT EXISTS `tasks` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

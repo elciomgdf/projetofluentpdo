@@ -5,15 +5,10 @@ namespace App\Services;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Models\TaskModel;
-use App\Traits\EncodeTrait;
-use App\Traits\JwtTrait;
-use App\Traits\MailTrait;
 use App\Validators\TaskValidator;
 
-class TaskService
+class TaskService extends Service
 {
-
-    use JwtTrait, EncodeTrait, MailTrait;
 
     /**
      * @param $data
@@ -113,8 +108,13 @@ class TaskService
         $model->fill($data);
 
         $model->save();
+
         return $model;
 
     }
 
+    public function delete(int $id = null, string $table = null): bool
+    {
+
+    }
 }

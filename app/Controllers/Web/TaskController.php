@@ -7,7 +7,6 @@ use App\Exceptions\NotFoundException;
 use App\Models\TaskModel;
 use App\Services\TaskCategoryService;
 use App\Services\TaskService;
-use App\Validators\TaskValidator;
 
 class TaskController extends Controller
 {
@@ -75,7 +74,7 @@ class TaskController extends Controller
 
             $id = $this->decode($this->input('encoded_id'));
 
-            $data = TaskValidator::validate($this->inputs(), $id);
+            $data = $this->inputs();
 
             $data['user_id'] = $this->session('user_id');
 

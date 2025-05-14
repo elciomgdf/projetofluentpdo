@@ -5,13 +5,10 @@ namespace App\Controllers\Api;
 use App\Constants\HttpStatus;
 use App\Constants\Response;
 use App\Exceptions\NotFoundException;
-use App\Exceptions\ValidationException;
 use App\Models\TaskCategoryModel;
-use App\Models\TaskModel;
 use App\Services\TaskCategoryService;
 use App\Traits\RequestTrait;
 use App\Traits\ResponseTrait;
-use App\Validators\TaskCategoryValidator;
 
 class TaskCategoryController extends RestrictedController
 {
@@ -67,7 +64,7 @@ class TaskCategoryController extends RestrictedController
             $model->find($id);
 
             if (empty($model->getId())) {
-                throw new \Exception("Categoria não encontrada", HttpStatus::NOT_FOUND);
+                throw new NotFoundException("Categoria não encontrada", HttpStatus::NOT_FOUND);
             }
 
             $this->json(array_merge($model->toArray(), ['encoded_id' => $this->encode($model->getId())]));
@@ -85,9 +82,7 @@ class TaskCategoryController extends RestrictedController
     {
         try {
 
-            $data = TaskCategoryValidator::validate($this->inputs());
-
-            $model = (new TaskCategoryService())->save($data);
+            $model = (new TaskCategoryService())->save($this->inputs());
 
             $this->json(array_merge($model->toArray(), ['encoded_id' => $this->encode($model->getId())]), HttpStatus::CREATED);
 
@@ -111,9 +106,7 @@ class TaskCategoryController extends RestrictedController
                 throw new \Exception("ID não informado", HttpStatus::BAD_REQUEST);
             }
 
-            $data = TaskCategoryValidator::validate($this->inputs(), $id);
-
-            $model = (new TaskCategoryService())->save($data, $id);
+            $model = (new TaskCategoryService())->save($this->inputs(), $id);
 
             $this->json(array_merge($model->toArray(), ['encoded_id' => $this->encode($id)]));
 
@@ -131,26 +124,7 @@ class TaskCategoryController extends RestrictedController
     {
         try {
 
-            $id = $this->decode($encodedId);
-
-            if ($id === 1) {
-                throw new ValidationException("A Categoria geral não pode ser excluída");
-            }
-
-            if (empty($id)) {
-                throw new NotFoundException("Registro não encontrado");
-            }
-
-            if ((new TaskModel())->findOneBy(["category_id" => $id])) {
-                throw new \Exception("Não é possível excluir uma categoria que esteja sendo usada");
-            };
-
-            $model = new TaskCategoryModel();
-            $deleted = $model->delete($id);
-
-            if (empty($deleted)) {
-                throw new NotFoundException("Registro não encontrado!");
-            }
+            (new TaskCategoryService())->delete($this->decode($encodedId));
 
             $this->json(['type' => Response::SUCCESS, 'message' => 'Registro excluído com sucesso']);
 

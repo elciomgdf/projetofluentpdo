@@ -3,24 +3,25 @@
 namespace App\Services;
 
 use App\Exceptions\NotFoundException;
+use App\Exceptions\ValidationException;
 use App\Models\TaskCategoryModel;
-use App\Traits\EncodeTrait;
-use App\Traits\JwtTrait;
-use App\Traits\MailTrait;
+use App\Models\TaskModel;
+use App\Validators\TaskCategoryValidator;
+use Envms\FluentPDO\Exception;
 
-class TaskCategoryService
+class TaskCategoryService extends Service
 {
 
-    use JwtTrait, EncodeTrait, MailTrait, EncodeTrait;
-
     /**
-     * @param $data
+     * @param int $limit
+     * @param string $orderBy
+     * @param string|null $table
      * @return array
      * @throws \Envms\FluentPDO\Exception
      */
-    public function all($limit = 1000)
+    public function all(int $limit = 1000, string $orderBy = 'name', string $table = null)
     {
-        $items = (new TaskCategoryModel())->all((int)$limit, 'name');
+        $items = (new TaskCategoryModel())->all($limit, $orderBy);
         if (!empty($items)) {
             foreach ($items as $key => $item) {
                 $items[$key]['encoded_id'] = $this->encode($item['id']);
@@ -72,6 +73,8 @@ class TaskCategoryService
     public function save($data, $id = null): ?TaskCategoryModel
     {
 
+        $data = TaskCategoryValidator::validate($data, $id);
+
         $model = new TaskCategoryModel();
         if ($id) {
             $model->find($id);
@@ -84,6 +87,42 @@ class TaskCategoryService
         $model->save();
 
         return $model;
+
+    }
+
+    /**
+     *
+     * Exclui o registro
+     * @param int|null $id
+     * @param string|null $table
+     * @return bool
+     * @throws NotFoundException
+     * @throws ValidationException
+     * @throws Exception
+     */
+    public function delete(int $id = null, string $table = null): bool
+    {
+
+        if (empty($id)) {
+            throw new NotFoundException("Registro não encontrado");
+        }
+
+        if ($id === 1) {
+            throw new ValidationException("A Categoria geral não pode ser excluída");
+        }
+
+        if ((new TaskModel())->findOneBy(["category_id" => $id])) {
+            throw new \Exception("Não é possível excluir uma categoria que esteja sendo usada");
+        };
+
+        $model = new TaskCategoryModel();
+        $deleted = $model->delete($id);
+
+        if (empty($deleted)) {
+            throw new NotFoundException("Registro não encontrado!");
+        }
+
+        return true;
 
     }
 

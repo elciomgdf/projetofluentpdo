@@ -5,15 +5,9 @@ namespace App\Services;
 use App\Constants\HttpStatus;
 use App\Models\UserModel;
 use App\Models\UserTokenModel;
-use App\Traits\EncodeTrait;
-use App\Traits\JwtTrait;
-use App\Traits\SessionTrait;
 
-
-class AuthService
+class AuthService extends Service
 {
-
-    use JwtTrait, EncodeTrait, SessionTrait;
 
     /**
      * Efetua o login caso os dados sejam corretos retornando um token que permite o acesso até a validade definida no .env

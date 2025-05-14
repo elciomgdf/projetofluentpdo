@@ -10,14 +10,19 @@ use Envms\FluentPDO\Query;
  */
 trait DataBaseTrait
 {
-    protected ?Query $fluent = null;
+
+    protected ?Query $query = null;
 
     protected bool $fillModel = false;
 
+    /**
+     *
+     * @return Query
+     */
     protected function db(): Query
     {
-        if ($this->fluent instanceof Query) {
-            return $this->fluent;
+        if ($this->query instanceof Query) {
+            return $this->query;
         }
 
         $pdo = new \PDO(
@@ -34,11 +39,16 @@ trait DataBaseTrait
             ]
         );
 
-        $this->fluent = new Query($pdo);
+        $this->query = new Query($pdo);
 
-        return $this->fluent;
+        return $this->query;
     }
 
+    /**
+     * Verifica se a Tabela existe
+     * @param string|null $table
+     * @return string|null
+     */
     private function getTable(string $table = null): ?string
     {
 
@@ -49,6 +59,13 @@ trait DataBaseTrait
 
         if (!$table) {
             throw new \RuntimeException('Nome da tabela não definido');
+        }
+
+        $stmt = $this->db()->getPdo()->prepare("SHOW TABLES LIKE '$table'");
+        $stmt->execute();
+
+        if ($stmt->rowCount() === 0) {
+            throw new \RuntimeException("A tabela $table não existe");
         }
 
         return $table;

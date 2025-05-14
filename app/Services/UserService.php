@@ -5,14 +5,9 @@ namespace App\Services;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Models\UserModel;
-use App\Traits\EncodeTrait;
-use App\Traits\JwtTrait;
-use App\Traits\MailTrait;
 
-class UserService
+class UserService extends Service
 {
-
-    use JwtTrait, EncodeTrait, MailTrait;
 
     /**
      * @param $data

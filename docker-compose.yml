@@ -36,14 +36,13 @@ services:
   mariadb:
     image: mariadb:10.5
     container_name: fluentpdo-mariadb
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: taskmanager
       MYSQL_USER: user
       MYSQL_PASSWORD: secret
     volumes:
-      - dbdata:/var/lib/mysql
+      - fluentpdo-dbdata:/var/lib/mysql
     ports:
       - "3308:3306"
     networks:
@@ -64,4 +63,4 @@ networks:
     driver: bridge
 
 volumes:
-  dbdata:
+  fluentpdo-dbdata:
