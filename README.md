@@ -23,7 +23,7 @@ Os dois projetos foram desenvolvidos separadamente mas a única diferença é o 
 
 ## 🔐 Geração e Instalação dos Certificados SSL
 
-### 📥 Geração (Linux ou WSL no Windows)
+### 📥 Geração (Linux ou  WSL 2 no Windows)
 
 1. Dê permissão de execução ao script:
 
@@ -47,7 +47,7 @@ Os dois projetos foram desenvolvidos separadamente mas a única diferença é o 
 4. Importe o `cert.pem` e marque como **confiável para identificar sites**.
 5. Reabra o navegador.
 
-### 🪟 Instalação no Windows (incluindo WSL/Docker Desktop)
+### 🪟 Instalação no Windows (incluindo  WSL 2/Docker Desktop)
 
 1. Clique duas vezes em `cert.pem`.
 2. Escolha **Instalar certificado**.
