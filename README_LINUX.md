@@ -1,4 +1,3 @@
-
 # Teste de Desenvolvimento
 
 ## ✅ Projeto
@@ -19,56 +18,39 @@
 
 ---
 
-## 🚀 Instalação do Projeto (Windows - modo fácil)
+## 🚀 Instalação do Projeto (Linux)
 
-### 1. 🧰 Instale o [Git para Windows](https://gitforwindows.org/)
-
-- Acesse: [https://gitforwindows.org/](https://gitforwindows.org/)
-- Baixe e instale normalmente.
-- Ele instalará o terminal **Git Bash**, necessário para rodar o script `.sh`.
-
-### 2. 📥 Clonar o repositório
+### 1. 📥 Clonar o repositório
 
 ```bash
 git clone https://github.com/elciomgdf/projetofluentpdo.git
 cd projetofluentpdo
 ```
 
-### 3. 🐳 Instale o [Docker Desktop](https://www.docker.com/products/docker-desktop)
+### 2. 🐳 Instale o Docker e Docker Compose
 
-- Acesse: [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
-- Baixe a versão para Windows e instale.
-- Durante a instalação, ative o suporte a **WSL 2** (opcional, mas recomendado).
-- Após instalar, reinicie o PC se for solicitado.
+Use seu gerenciador de pacotes ou siga as instruções oficiais:
 
-### 4. 📂 Abra o **Git Bash** na pasta do projeto
+- Docker: https://docs.docker.com/engine/install/
+- Compose: https://docs.docker.com/compose/install/
 
-- Vá até a pasta `projetofluentpdo` no Explorador de Arquivos.
-- Clique com o botão direito numa área vazia da pasta.
-- Selecione: **Git Bash Here**
+### 3. 🔐 Gere os certificados SSL
 
-> Se não aparecer essa opção, reinicie o PC ou reinstale o Git for Windows.
-
-### 5. 🔐 Gere os certificados:
-
-Dentro do Git Bash, rode:
+Dê permissão e execute o script:
 
 ```bash
+chmod +x ./gerar_certificados_ssl.sh
 ./gerar_certificados_ssl.sh
 ```
 
-Isso criará os arquivos:
+> Isso criará os arquivos `cert.pem` e `key.pem` em `./docker/ssl`.
 
-- `docker/ssl/cert.pem`
-- `docker/ssl/key.pem`
+### 4. 🧠 Configure o arquivo de hosts
 
+Abra o terminal e edite o `/etc/hosts` com permissões de root:
 
-### 6. 🧠 Configure o arquivo de hosts:
-
-Abra como administrador o arquivo:
-
-```
-C:\Windows\System32\drivers\etc\hosts
+```bash
+sudo nano /etc/hosts
 ```
 
 Adicione ao final:
@@ -77,26 +59,21 @@ Adicione ao final:
 127.0.0.1 projetofluentpdo.test
 ```
 
-### 7. ✅ Instale o certificado:
+### 5. ✅ Instale o certificado no Linux
 
-1. Dê dois cliques no arquivo `cert.pem`, se não funcionar, você pode usar Window + R e executar `certmgr.msc`
-2. Clique em **Instalar Certificado**
-3. Escolha **Máquina Local**
-4. Avance até a opção:
-   - **Colocar todos os certificados no repositório a seguir**
-5. Selecione: `Autoridades de Certificação Raiz Confiáveis`
-6. Conclua e aceite os avisos de segurança
-7. Feche e reabra o navegador
+1. Acesse `https://projetofluentpdo.test` no navegador
+2. Clique no ícone de cadeado ou “Não seguro” → **Visualizar certificado** → **Exportar**
+3. Vá até **Configurações do sistema** → **Certificados** → **Autoridades**
+4. Importe o `cert.pem` e marque como **confiável para identificar sites**
+5. Reabra o navegador
 
-### 8. ⚙️ Suba os containers:
-
-No terminal (Git Bash, PowerShell ou CMD), rode:
+### 6. ⚙️ Suba os containers
 
 ```bash
 docker-compose up -d --build
 ```
 
-### 9. 📦 Instale dependências PHP e configure o banco
+### 7. 📦 Instale dependências PHP e configure o banco
 
 ```bash
 docker exec -it nome_do_container_php bash
@@ -109,8 +86,6 @@ php database/create_database.php
 ## ✅ Acesso ao Projeto
 
 Acesse no navegador: [https://projetofluentpdo.test](https://projetofluentpdo.test)
-
-> Se aparecer como “inseguro”, feche e reabra o navegador após instalar o certificado corretamente.
 
 ---
 
