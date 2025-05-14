@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Web;
 
+use App\Exceptions\NotFoundException;
 use App\Models\UserModel;
 use App\Services\UserService;
 use App\Validators\UserValidator;
@@ -19,6 +20,9 @@ class UserController extends Controller
 
             $model = new UserModel();
             $model->find($this->session('user_id'));
+            if (empty($model->getId())) {
+                throw new NotFoundException("Usuario não encontrado");
+            }
             $data = $model->toArray();
             $this->view('profile/edit', $data);
 
