@@ -5,6 +5,9 @@
 - `https://projetofluentpdo.test` → **Usando FluentPDO**
 - `https://projetomedoo.test` → **Usando Medoo**
 
+Os dois projetos foram desenvolvidos separadamente mas a única diferença é o uso da biblioteca de acesso à base de dados de cada um.
+
+
 ---
 
 ## ✅ Tecnologias e Ferramentas

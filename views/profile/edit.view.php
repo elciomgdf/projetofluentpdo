@@ -54,12 +54,6 @@ include_once __DIR__ . "/../includes/header.view.php"
 
                 <div class="row">
                     <div class="col-12">
-                        <div id="message" class="alert text-center d-none" role="alert"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
                         <div class="d-flex justify-content-between">
                             <a class="btn btn-link me-auto" href="#" onclick="window.goBack()" role="button">Voltar</a>
                             <button id="btn-submit" type="submit" class="btn btn-success">Salvar</button>
@@ -82,24 +76,36 @@ include_once __DIR__ . "/../includes/header.view.php"
                     url: '/profile/save',
                     method: 'POST',
                     data: formData,
+                    dataType: "json",
                     success: function (res) {
-                        $('#message').text(res.message)
-                            .removeClass('alert-danger d-none')
-                            .addClass('alert-success');
-                        $('#btn-submit').text('Carregando...');
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000)
+
+                        if (res.type) {
+                            toastr[res.type](res.message);
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000)
+                        } else {
+                            toastr['error']('Houve um erro inesperado ao salvar o registro!');
+                            $('#btn-submit').prop('disabled', false).text('Salvar');
+                        }
+
                     },
                     error: function (xhr) {
+
                         $('#btn-submit').prop('disabled', false).text('Salvar');
-                        const msg = xhr.responseJSON?.message || 'Erro ao salvar usuário.';
-                        const resposta = xhr.responseJSON;
-                        if (resposta?.errors) {
-                            exibeErros(resposta.errors);
+
+                        const response = xhr.responseJSON;
+
+                        if (response?.message) {
+                            toastr[response.type](response.message)
+                        } else {
+                            toastr['error']('Erro inesperado');
                         }
-                        $('#message').text(msg).removeClass('alert-success d-none')
-                            .addClass('alert-danger');
+
+                        if (response?.errors) {
+                            exibeErros(response.errors);
+                        }
+
                     }
                 });
             });

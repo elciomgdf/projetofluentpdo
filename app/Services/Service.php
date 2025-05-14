@@ -17,7 +17,7 @@ class Service
      * Verifica se as tabelas foram criadas na base de dados
      * @return void
      */
-    public function checkDatabase()
+    public function checkDatabase(): void
     {
 
         $tables = [

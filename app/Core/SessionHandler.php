@@ -9,7 +9,7 @@ class SessionHandler implements SessionHandlerInterface
 {
     use DataBaseTrait;
 
-    public function open($savePath, $sessionName): bool
+    public function open($path, $name): bool
     {
         return true;
     }

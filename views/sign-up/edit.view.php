@@ -35,7 +35,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="name" class="form-label">Nome completo</label>
-                                        <input type="text" class="form-control" id="name" name="name" required maxlength="100" autocomplete="off">
+                                        <input type="text" value="Elcio Mauro" class="form-control" id="name" name="name" required maxlength="100" autocomplete="off">
                                         <div class="invalid-feedback" id="error_name"></div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="email" class="form-label">E-mail</label>
-                                        <input type="email" class="form-control" id="email" name="email" required maxlength="150" autocomplete="off">
+                                        <input type="email" value="elciomgdf@gmail.com" class="form-control" id="email" name="email" required maxlength="150" autocomplete="off">
                                         <div class="invalid-feedback" id="error_email"></div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="password" class="form-label">Senha</label>
-                                        <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
+                                        <input type="password" value="homologa" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
                                         <div class="invalid-feedback" id="error_password"></div>
                                     </div>
                                 </div>
@@ -90,14 +90,19 @@
                             url: '/sign-up/create',
                             method: 'POST',
                             data: formData,
+                            dataType: "json",
                             success: function (res) {
                                 $('#message').text('Usuário cadastrado com sucesso!')
                                     .removeClass('alert-danger d-none')
                                     .addClass('alert-success');
                                 $('#btn-submit').text('Redirecionando...');
-                                setTimeout(function () {
-                                    location.replace('/dashboard');
-                                }, 1000);
+
+                                if (res.id) {
+                                    setTimeout(function () {
+                                        location.replace('/dashboard');
+                                    }, 1000);
+                                }
+
                             },
                             error: function (xhr) {
                                 $('#btn-submit').prop('disabled', false).text('Cadastrar');

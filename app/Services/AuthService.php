@@ -10,13 +10,16 @@ class AuthService extends Service
 {
 
     /**
+     *
      * Efetua o login caso os dados sejam corretos retornando um token que permite o acesso até a validade definida no .env
+     *
      * @param $email
      * @param $password
+     * @param $session
      * @return array
      * @throws \Envms\FluentPDO\Exception
      */
-    public function login($email, $password, $session = false)
+    public function login($email, $password, $session = false): array
     {
 
         $user = new UserModel();
@@ -62,11 +65,11 @@ class AuthService extends Service
     /**
      * Método chamado ao fazer logout. Em uma autenticação com token, ele invalida o token em uma tabela específica.
      * Em uma autenticação por sessão, ele exclui a sessão.
-     * @param $session
+     * @param bool $session
      * @return bool
      * @throws \Envms\FluentPDO\Exception
      */
-    public function logout($session = false)
+    public function logout(bool $session = false): bool
     {
 
         if ($session) {

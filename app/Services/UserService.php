@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Models\UserModel;
+use Envms\FluentPDO\Exception;
 
 class UserService extends Service
 {
@@ -12,9 +13,9 @@ class UserService extends Service
     /**
      * @param $data
      * @return array
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception
      */
-    public function search($data)
+    public function search(array $data): array
     {
 
         $page = max(1, $data['page'] ?? 1);
@@ -47,9 +48,9 @@ class UserService extends Service
      * @param $data
      * @param $id
      * @return UserModel|null
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception|NotFoundException
      */
-    public function save($data, $id = null)
+    public function save($data, $id = null): ?UserModel
     {
 
         $model = new UserModel();
@@ -80,7 +81,7 @@ class UserService extends Service
      * @param $email
      * @return UserModel
      * @throws ValidationException
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception
      */
     public function createNewPassword($email): UserModel
     {

@@ -38,12 +38,6 @@ include_once __DIR__ . "/../includes/header.view.php"
 
                 <div class="row">
                     <div class="col-12">
-                        <div id="message" class="alert text-center d-none" role="alert"></div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12">
                         <div class="d-flex justify-content-between">
                             <input name="encoded_id" id="encoded_id" type="hidden" value="<?= $encoded_id ?>">
                             <a class="btn btn-link me-auto" href="#" onclick="window.goBack()" role="button">Voltar</a>
@@ -65,24 +59,36 @@ include_once __DIR__ . "/../includes/header.view.php"
                 url: '/category/save',
                 method: 'POST',
                 data: formData,
+                dataType: "json",
                 success: function (res) {
-                    $('#message').text('Categoria salva com sucesso!')
-                        .removeClass('alert-danger d-none')
-                        .addClass('alert-success');
-                    $('#btn-submit').text('Carregando...');
-                    setTimeout(function () {
-                        location.replace('/category/' + res.encoded_id + '/edit')
-                    }, 1000)
+
+                    if (res.id) {
+                        toastr['success']('Registro salvo com sucesso!');
+                        setTimeout(function () {
+                            location.replace('/category/' + res.encoded_id + '/edit')
+                        }, 1000)
+                    } else {
+                        toastr['error']('Houve um erro inesperado ao salvar o registro!');
+                        $('#btn-submit').prop('disabled', false).text('Salvar');
+                    }
+
                 },
                 error: function (xhr) {
+
                     $('#btn-submit').prop('disabled', false).text('Salvar');
-                    const msg = xhr.responseJSON?.message || 'Erro ao salvar tarefa.';
-                    const resposta = xhr.responseJSON;
-                    if (resposta?.errors) {
-                        exibeErros(resposta.errors);
+
+                    const response = xhr.responseJSON;
+
+                    if (response?.message) {
+                        toastr[response.type](response.message)
+                    } else {
+                        toastr['error']('Erro inesperado');
                     }
-                    $('#message').text(msg).removeClass('alert-success d-none')
-                        .addClass('alert-danger');
+
+                    if (response?.errors) {
+                        exibeErros(response.errors);
+                    }
+
                 }
             });
         });

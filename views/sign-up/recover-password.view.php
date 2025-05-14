@@ -74,6 +74,7 @@
                             url: '/recover-password/send',
                             method: 'POST',
                             data: formData,
+                            dataType: "json",
                             success: function (res) {
                                 $('#message').text(res.message)
                                     .removeClass('alert-danger d-none')

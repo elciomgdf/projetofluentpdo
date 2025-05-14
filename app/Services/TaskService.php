@@ -6,6 +6,7 @@ use App\Exceptions\NotFoundException;
 use App\Exceptions\ValidationException;
 use App\Models\TaskModel;
 use App\Validators\TaskValidator;
+use Envms\FluentPDO\Exception;
 
 class TaskService extends Service
 {
@@ -13,9 +14,9 @@ class TaskService extends Service
     /**
      * @param $data
      * @return array
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception|ValidationException
      */
-    public function search($data)
+    public function search(array $data): array
     {
 
         $page = max(1, $data['page'] ?? 1);
@@ -78,7 +79,9 @@ class TaskService extends Service
      * @param $data
      * @param $id
      * @return TaskModel|null
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception
+     * @throws NotFoundException
+     * @throws ValidationException
      */
     public function save($data, $id = null): ?TaskModel
     {
@@ -113,8 +116,4 @@ class TaskService extends Service
 
     }
 
-    public function delete(int $id = null, string $table = null): bool
-    {
-
-    }
 }

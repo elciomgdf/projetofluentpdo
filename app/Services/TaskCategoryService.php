@@ -17,9 +17,9 @@ class TaskCategoryService extends Service
      * @param string $orderBy
      * @param string|null $table
      * @return array
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception
      */
-    public function all(int $limit = 1000, string $orderBy = 'name', string $table = null)
+    public function all(int $limit = 1000, string $orderBy = 'name', string $table = null): array
     {
         $items = (new TaskCategoryModel())->all($limit, $orderBy);
         if (!empty($items)) {
@@ -33,9 +33,9 @@ class TaskCategoryService extends Service
     /**
      * @param $data
      * @return array
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception
      */
-    public function search($data)
+    public function search(array $data): array
     {
 
         $page = max(1, $data['page'] ?? 1);
@@ -68,7 +68,7 @@ class TaskCategoryService extends Service
      * @param $data
      * @param $id
      * @return TaskCategoryModel|null
-     * @throws \Envms\FluentPDO\Exception
+     * @throws Exception|NotFoundException
      */
     public function save($data, $id = null): ?TaskCategoryModel
     {

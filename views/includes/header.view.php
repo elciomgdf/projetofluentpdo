@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="icon" href="/assets/images/favicon.png">
     <link href="/assets/css/bootstrap-5.3.6-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/assets/js/toastr/toastr.min.css"/>
     <script src="/assets/js/jquery-3.7.1.min.js"></script>
+    <script src="/assets/js/toastr/toastr.min.js"></script>
     <script src="/assets/js/funcoes.js"></script>
 </head>
 <body class="bg-body-tertiary">
