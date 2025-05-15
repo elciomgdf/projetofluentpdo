@@ -65,5 +65,6 @@ yarn-error.log
 *.lock
 
 
-docker/ssl/*
-!docker/ssl/.gitkeep
+docker/ssl/cert.pem
+docker/ssl/key.pem
+docker/ssl/openssl-san.cnf
