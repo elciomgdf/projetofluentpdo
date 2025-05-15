@@ -35,7 +35,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="name" class="form-label">Nome completo</label>
-                                        <input type="text" value="Elcio Mauro" class="form-control" id="name" name="name" required maxlength="100" autocomplete="off">
+                                        <input type="text" class="form-control" id="name" name="name" required maxlength="100" autocomplete="off">
                                         <div class="invalid-feedback" id="error_name"></div>
                                     </div>
                                 </div>
@@ -45,7 +45,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="email" class="form-label">E-mail</label>
-                                        <input type="email" value="elciomgdf@gmail.com" class="form-control" id="email" name="email" required maxlength="150" autocomplete="off">
+                                        <input type="email" class="form-control" id="email" name="email" required maxlength="150" autocomplete="off">
                                         <div class="invalid-feedback" id="error_email"></div>
                                     </div>
                                 </div>
@@ -55,7 +55,7 @@
                                 <div class="col-12">
                                     <div class="mb-2">
                                         <label for="password" class="form-label">Senha</label>
-                                        <input type="password" value="homologa" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
+                                        <input type="password" class="form-control" id="password" name="password" required minlength="6" autocomplete="new-password">
                                         <div class="invalid-feedback" id="error_password"></div>
                                     </div>
                                 </div>
